@@ -66,5 +66,3 @@ Use this script at your own risk. I am not responsible for any damages caused by
 
 Feel free to modify this README to suit your project and add any additional information that you think would be helpful for users.
 
-
-You can copy and paste this Markdown code into your GitHub repository's README.md file.
