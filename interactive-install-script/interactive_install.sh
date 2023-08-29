@@ -46,6 +46,19 @@ while true; do
         break
     fi
 
+    # Search for the package using brew search if not found initially
+    while ! brew search --quiet "$package_name"; do
+        echo "Package not found. Did you mean one of the following?"
+        brew search "$package_name"
+        read -p "Enter the correct package name or 'skip' to skip: " new_package_name
+        if [ "$new_package_name" == "skip" ]; then
+            break
+        else
+            package_name="$new_package_name"
+        fi
+    done
+
+    # Install the package using the chosen installation method
     $installation_command "$package_name"
     check_installation "$package_name"
 done
@@ -58,3 +71,4 @@ else
         echo "- $failed_installation"
     done
 fi
+
