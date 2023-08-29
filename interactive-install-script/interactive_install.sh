@@ -20,55 +20,70 @@ check_installation() {
 
 failed_installations=()
 
-# Prompt user for installation method
-echo "Select an installation method:"
-echo "1. brew"
-echo "2. brew --cask"
-read -p "Enter your choice (1/2): " installation_method
-
-case $installation_method in
-    1)
-        installation_command="brew install"
-        ;;
-    2)
-        installation_command="brew install --cask"
-        ;;
-    *)
-        echo "Invalid choice. Exiting."
-        exit 1
-        ;;
-esac
-
-# Prompt user to add packages
 while true; do
-    read -p "Enter the name of the package (or 'done' to finish): " package_name
-    if [ "$package_name" == "done" ]; then
-        break
-    fi
+    echo "Select an action:"
+    echo "1. Install a package with 'brew'"
+    echo "2. Install a package with 'brew --cask'"
+    echo "3. Search for a package"
+    echo "4. Quit"
+    read -p "Enter your choice (1/2/3/4): " choice
 
-    # Search for the package using brew search if not found initially
-    while ! brew search --quiet "$package_name"; do
-        echo "Package not found. Did you mean one of the following?"
-        brew search "$package_name"
-        read -p "Enter the correct package name or 'skip' to skip: " new_package_name
-        if [ "$new_package_name" == "skip" ]; then
+    case $choice in
+        1)
+            installation_method="brew install"
+            ;;
+        2)
+            installation_method="brew install --cask"
+            ;;
+        3)
+            installation_method="search"
+            ;;
+        4)
+            echo "Exiting."
+            exit 0
+            ;;
+        *)
+            echo "Invalid choice. Please enter a valid option."
+            continue
+            ;;
+    esac
+
+    # Prompt user to add packages
+    while true; do
+        read -p "Enter the name of the package (or 'done' to finish): " package_name
+        if [ "$package_name" == "done" ]; then
             break
-        else
-            package_name="$new_package_name"
+        fi
+
+        if [ "$choice" == "3" ]; then
+            echo "Searching for package: $package_name"
+            brew search "$package_name"
+            continue
+        fi
+
+        # Install the package using the chosen installation method
+        if [ "$choice" != "3" ]; then
+            $installation_method "$package_name"
+            check_installation "$package_name"
         fi
     done
 
-    # Install the package using the chosen installation method
-    $installation_command "$package_name"
-    check_installation "$package_name"
+    echo "Actions:"
+    echo "1. Choose another action"
+    echo "2. Quit"
+    read -p "Enter your choice (1/2): " action_choice
+
+    case $action_choice in
+        1)
+            continue
+            ;;
+        2)
+            echo "Exiting."
+            exit 0
+            ;;
+        *)
+            echo "Invalid choice. Exiting."
+            exit 1
+            ;;
+    esac
 done
-
-if [ ${#failed_installations[@]} -eq 0 ]; then
-    echo "All installations completed successfully!"
-else
-    echo "Some installations failed:"
-    for failed_installation in "${failed_installations[@]}"; do
-        echo "- $failed_installation"
-    done
-fi
-

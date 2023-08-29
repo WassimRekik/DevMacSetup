@@ -3,12 +3,12 @@
 
 This repository provides two installation scripts for automating the installation of development tools and applications on macOS using Homebrew. Choose the script that best fits your needs:
 
-1. [Installation Script](#installation-script)
+1. [TXT Installation Script](#txt-installation-script)
 2. [Interactive Installation Script](#interactive-installation-script)
 
-## Installation Script
+## TXT Installation Script
 
-The **Installation Script** is a non-interactive script that installs a predefined list of tools and applications. It is suitable for a hands-off installation process. You can modify the script to customize the list of packages to install.
+The **TXT Installation Script** is a non-interactive script that installs a predefined list of tools and applications. It is suitable for a hands-off installation process. You can modify the txt files to customize the list of packages to install.
 
 ### Prerequisites
 
@@ -24,7 +24,7 @@ The **Installation Script** is a non-interactive script that installs a predefin
    chmod +x install_script.sh
    ```
 
-3. Create a file named `brew_install_list.txt` and `cask_install_list.txt` in the same directory as the script.
+3. Update a file named `brew_install_list.txt` and `cask_install_list.txt` in the same directory as the script.
 
 4. Add the names of packages you want to install to the respective files:
 
@@ -57,7 +57,7 @@ The **Installation Script** is a non-interactive script that installs a predefin
 
 ## Interactive Installation Script
 
-The **Interactive Installation Script** is an interactive script that allows you to choose between `brew` and `brew --cask` installations. You can add packages interactively, making it easy to customize your installation.
+The **Interactive Installation Script** is an interactive script that allows you to choose between `brew` and `brew --cask` installations add search for packages. You can add packages interactively, making it easy to customize your installation.
 
 ### Prerequisites
 
@@ -81,7 +81,7 @@ The **Interactive Installation Script** is an interactive script that allows you
    ./interactive_install.sh
    ```
 
-5. Follow the prompts to select an installation method and add packages.
+5. Follow the prompts to select an installation method and add packages or search for packages.
 
 6. The script will attempt to install the selected packages using the chosen installation method.
 

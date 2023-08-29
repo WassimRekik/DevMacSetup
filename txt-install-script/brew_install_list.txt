@@ -1,0 +1,4 @@
+node
+@angular/cli
+express-generator
+k6
